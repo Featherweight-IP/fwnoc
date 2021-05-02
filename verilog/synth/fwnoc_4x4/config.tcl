@@ -9,7 +9,7 @@ set ::env(DIE_AREA) "0 0 700 700"
 set ::env(DESIGN_IS_CORE) 0
 
 #set ::env(PL_BASIC_PLACEMENT) 1
-set ::env(PL_TARGET_DENSITY) 0.55
+set ::env(PL_TARGET_DENSITY) 0.32
 #set ::env(PL_TARGET_DENSITY) 0.50
 
 #set ::env(DIODE_INSERTION_STRATEGY) 1

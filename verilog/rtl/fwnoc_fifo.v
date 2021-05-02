@@ -14,7 +14,6 @@ module fwnoc_fifo #(
 		) (
 		input					clock,
 		input					reset,
-		output[PTR_WIDTH-1:0]	count,
 		`RV_TARGET_PORT(i_, 32),
 		`RV_INITIATOR_PORT(e_, 32)
 		);
@@ -22,7 +21,7 @@ module fwnoc_fifo #(
 	reg[31:0]					fifo[DEPTH-1:0];
 	reg[PTR_WIDTH-1:0]			rptr;
 	reg[PTR_WIDTH-1:0]			wptr;
-	reg[PTR_WIDTH-1:0]			count;
+	reg[PTR_WIDTH:0]			count;
 	wire[PTR_WIDTH-1:0]			wptr_plus_1 = wptr + 1;
 
 	assign e_valid = |count;

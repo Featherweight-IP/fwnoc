@@ -5,6 +5,10 @@ cocotb
 
 vlsim
 
+-e git+ssh://git@github.com/fvutils/pyvsc.git#egg=pyvsc
+
 -e git+ssh://git@github.com/pybfms/pybfms.git#egg=pybfms
 -e git+ssh://git@github.com/pybfms/pybfms-rv.git#egg=pybfms-rv
+-e git+ssh://git@github.com/pybfms/pybfms-gpio.git#egg=pybfms-gpio
 -e git+ssh://git@github.com/fvutils/mkdv.git#egg=mkdv
+
