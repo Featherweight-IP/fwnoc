@@ -31,21 +31,26 @@ class IngressSender(object):
         self.count = count
         self.ingress = ingress
         self.receivers = receivers
+        self.id = 0
     
     async def run(self):
         for i in range(self.count):
             pkt = FwNocPacket(self.src_x, self.src_y)
-            
+
+            pkt.src_chip_x = 0
+            pkt.src_chip_y = 0
             pkt.src_tile_x = self.src_x
             pkt.src_tile_y = self.src_y
+            pkt.id = i
             
             with pkt.randomize_with() as it:
+                it.payload.size == 1
                 it.dst_chip_x == 0
                 it.dst_chip_y == 0
                 it.dst_tile_x.inside(vsc.rangelist(vsc.rng(0,self.max_x)))
                 it.dst_tile_y.inside(vsc.rangelist(vsc.rng(0,self.max_y)))
                 
-            print(pkt.src_s() + " sending to " + pkt.dst_s())
+            print("" + str(i) + " " + pkt.src_s() + " (sz=" + str(len(pkt.payload)) + ") sending to " + pkt.dst_s())
             recv = self.receivers[(pkt.dst_tile_x,pkt.dst_tile_y)]
             recv.add_exp(pkt)
             await self.ingress.send(pkt)
@@ -62,7 +67,8 @@ class EgressReceiver(object):
         egress.add_recv_cb(self._recv)
         # Dict of lists holding expected packets
         self.exp = {}
-        pass
+        
+        self.drain_ev = pybfms.event()
     
     def add_exp(self, pkt):
         if (pkt.src_tile_x,pkt.src_tile_y) not in self.exp:
@@ -73,7 +79,7 @@ class EgressReceiver(object):
     
     def _recv(self, pkt):
         
-        print("(" + str(self.x) + "," + str(self.y) + ") receiving " + pkt.dst_s() + " from " + pkt.src_s())
+        print("" + str(pkt.id) + " (" + str(self.x) + "," + str(self.y) + ") receiving " + pkt.dst_s() + " from " + pkt.src_s())
         
         if (pkt.src_tile_x,pkt.src_tile_y) not in self.exp:
             queue = []
@@ -86,8 +92,17 @@ class EgressReceiver(object):
                   str(pkt.src_tile_x) + "," + str(pkt.src_tile_y) + ")")
         else:
             print("TODO: check packet from " + pkt.src_s())
+            queue.pop()
+            
+            if len(queue) == 0:
+                print("Empty")
+                self.drain_ev.set()
         
 #        print("(" + str(self.x) + "," + str(self.y) + ") receive from " + str(pkt.src_tile_x) + "," + str(pkt.src_tile_y))
+
+    def get_drain_ev(self):
+        return self.drain_ev
+        
         
     
 
@@ -141,7 +156,7 @@ async def entry(dut):
                 y, 
                 max_x, 
                 max_y, 
-                1, 
+                0 if y == 0 else 8,
                 bfms[(x,y)], 
                 receivers)
             
@@ -157,7 +172,7 @@ async def entry(dut):
             sender_tasks.append(pybfms.fork(senders[(x,y)].run()))
             
     await cocotb.triggers.Combine(*sender_tasks)
-            
+    
 #     print("size_x=" + str(size_x) + " size_y=" + str(size_y))
 #     await bfms[(0,0)].wait_reset()
 #     

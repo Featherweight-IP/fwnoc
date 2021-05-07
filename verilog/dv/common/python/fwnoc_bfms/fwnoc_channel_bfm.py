@@ -20,12 +20,21 @@ class FwNocPacket(object):
         self.dst_tile_y = vsc.rand_bit_t(2, i=ty)
         self.dst_chip_x = vsc.rand_bit_t(2, i=cx)
         self.dst_chip_y = vsc.rand_bit_t(2, i=cy)
+        self.id = 0
         self.payload_sz = -1
         self.payload = vsc.randsz_list_t(vsc.uint32_t())
         
     @vsc.constraint
     def size_c(self):
         self.payload.size.inside(vsc.rangelist(0, 1, 2, 4, 8, 16))
+        vsc.dist(self.payload.size, 
+                 [
+                     vsc.weight(0, 10),
+                     vsc.weight(1, 40),
+                     vsc.weight(2, 10),
+                     vsc.weight(4, 10),
+                     vsc.weight(8, 10),
+                     vsc.weight(16, 10)])
         
     @vsc.constraint
     def src_dst_c(self):
@@ -53,14 +62,15 @@ class FwNocPacket(object):
         
         ret = 0
         ret |= payload_sz_m[len(self.payload)]
+        ret |= ((self.id & 0xF) << 4)
         ret |= ((self.dst_tile_x & 0x3) << 30)
         ret |= ((self.dst_tile_y & 0x3) << 28)
         ret |= ((self.dst_chip_x & 0x3) << 26)
         ret |= ((self.dst_chip_y & 0x3) << 24)
-        ret |= ((self.dst_tile_x & 0x3) << 22)
-        ret |= ((self.dst_tile_y & 0x3) << 20)
-        ret |= ((self.dst_chip_x & 0x3) << 18)
-        ret |= ((self.dst_chip_y & 0x3) << 16)
+        ret |= ((self.src_tile_x & 0x3) << 22)
+        ret |= ((self.src_tile_y & 0x3) << 20)
+        ret |= ((self.src_chip_x & 0x3) << 18)
+        ret |= ((self.src_chip_y & 0x3) << 16)
         
         return ret
     
@@ -91,6 +101,7 @@ class FwNocPacket(object):
         pkt.src_chip_x = ((header >> 18) & 0x3)
         pkt.src_chip_y = ((header >> 16) & 0x3)
         
+        pkt.id = ((header >> 4) & 0xF)
         pkt.payload_sz = payload_sz_m[header & 0x3]
         
         return pkt
@@ -122,7 +133,7 @@ class FwNocChannelBFM(object):
     async def send(self, pkt : FwNocPacket):
         await self.busy.acquire()
         await self.ingress.send(pkt.header())
-        
+
         for dat in pkt.payload:
             await self.ingress.send(dat)
             
@@ -133,8 +144,10 @@ class FwNocChannelBFM(object):
         def _recv(pkt):
             nonlocal ev
             ev.set(pkt)
-
+            
+        self.add_recv_cb(_recv)
         pkt = await ev.wait()
+        self.del_recv_cb(_recv)
                    
         return pkt 
 
@@ -142,6 +155,12 @@ class FwNocChannelBFM(object):
         if self.pkt is None:
             self.pkt = FwNocPacket.mk(data)
             print("Begin: payload_sz=" + str(self.pkt.payload_sz))
+            
+            if self.pkt.payload_sz == 0:
+                if len(self.pkt.payload) >= self.pkt.payload_sz:
+                    for cb in self.recv_cb.copy():
+                        cb(self.pkt)
+                self.pkt = None
         else:
             self.pkt.payload.append(data)
             print("Recv: current payload_sz=" + str(len(self.pkt.payload)))

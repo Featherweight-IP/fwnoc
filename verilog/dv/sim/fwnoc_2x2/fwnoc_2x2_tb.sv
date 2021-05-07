@@ -34,7 +34,7 @@ module fwnoc_2x2_tb(input clock);
 		assign clock = clock_r;
 	`endif
 	
-	reg reset = 0;
+	reg reset /* verilator public */= 0;
 	reg[7:0] reset_cnt = 0;
 	
 	always @(posedge clock) begin
@@ -68,8 +68,8 @@ module fwnoc_2x2_tb(input clock);
 
 	generate
 		genvar yi, xi;
-		for (xi=0; xi<SIZE_X; xi=xi+1) begin
-			for (yi=0; yi<SIZE_Y; yi=yi+1) begin
+		for (yi=0; yi<SIZE_Y; yi=yi+1) begin
+			for (xi=0; xi<SIZE_X; xi=xi+1) begin
 				rv_data_in_bfm #(
 					.DATA_WIDTH  (32)
 				) u_he_bfm (

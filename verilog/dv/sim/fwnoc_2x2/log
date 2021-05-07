@@ -7,13 +7,20 @@ make[1]: Entering directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/
 make[1]: Nothing to be done for 'build-icarus'.
 make[1]: Leaving directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/cache/icarus'
 INCFILES: /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_ncsim.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_icestorm.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_vcs.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_icarus.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_cocotb.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_vlsim.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_openlane.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_questa.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_quartus.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_sby.mk /project/fun/featherweight-ip/fwnoc/packages/mkdv/src/mkdv/share/mkfiles/mkdv_pybfms.mk sby questa icestorm vlsim quartus openlane icarus questa icestorm quartus openlane cocotb pybfms
+if test /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2 != /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir; then rm -rf /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir; fi
+mkdir -p /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir
+make -C /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir -f /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/mkdv.mk \
+	MKDV_RUNDIR=/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir \
+	MKDV_CACHEDIR=/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/cache/icarus \
+	run-icarus || (echo "FAIL: exit status $?" > status.txt; exit 1)
 make[1]: Entering directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir'
+vvp -m /project/fun/featherweight-ip/fwnoc/packages/python/lib64/python3.6/site-packages/cocotb/libs/libcocotbvpi_icarus.vpl -m /project/fun/featherweight-ip/fwnoc/packages/pybfms/src/libpybfms.so /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/cache/icarus/simv.vvp +timeout=1000000  +dumpvars
      -.--ns INFO     cocotb.gpi                         ..mbed/gpi_embed.cpp:77   in set_program_name_in_venv        Did not detect Python virtual environment. Using system-wide Python interpreter
      -.--ns INFO     cocotb.gpi                         ../gpi/GpiCommon.cpp:105  in gpi_print_registered_impl       VPI registered
      -.--ns INFO     cocotb.gpi                         ..mbed/gpi_embed.cpp:240  in _embed_sim_init                 Python interpreter initialized and cocotb loaded!
      0.00ns INFO     Running on Icarus Verilog version 11.0 (stable)
      0.00ns INFO     Running tests with cocotb v1.5.1 from /project/fun/featherweight-ip/fwnoc/packages/python/lib64/python3.6/site-packages/cocotb
-     0.00ns INFO     Seeding Python random module with 1619996824
+     0.00ns INFO     Seeding Python random module with 1620268916
      0.00ns WARNING  Pytest not found, assertion rewriting will not occur
      0.00ns INFO     Found test fwnoc_tests.fwnoc.smoke.entry
      0.00ns INFO     Running test 1/1: entry
@@ -32,41 +39,249 @@ BFM: fwnoc_2x2_tb.genblk1[1].genblk2[0].u_hi_bfm : rv_bfms.rv_data_out_bfm.Ready
 BFM: fwnoc_2x2_tb.genblk1[1].genblk2[1].u_he_bfm : rv_bfms.rv_data_in_bfm.ReadyValidDataInBFM
 BFM: fwnoc_2x2_tb.genblk1[1].genblk2[1].u_hi_bfm : rv_bfms.rv_data_out_bfm.ReadyValidDataOutBFM
 BFM: fwnoc_2x2_tb.u_gpio_params : gpio_bfms.GpioBfm.GpioBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.hi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.he : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.ni : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.ne : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.si : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.se : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.ei : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.ee : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.wi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[0].u_router.u_dbg.u_dbg.we : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.hi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.he : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.ni : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.ne : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.si : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.se : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.ei : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.ee : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.wi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[0].router_yi[1].u_router.u_dbg.u_dbg.we : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.hi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.he : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.ni : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.ne : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.si : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.se : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.ei : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.ee : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.wi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[0].u_router.u_dbg.u_dbg.we : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.hi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.he : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.ni : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.ne : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.si : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.se : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.ei : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.ee : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.wi : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
+BFM: fwnoc_2x2_tb.u_dut.router_xi[1].router_yi[1].u_router.u_dbg.u_dbg.we : fwnoc_dbg_bfms.fwnoc_channel_dbg_bfm.FwnocChannelDbgBfm
 Hello X=2 Y=2
-(0,0,0,0) sending to (0,0,1,0)
-(0,0,0,1) sending to (0,0,1,0)
-(0,0,1,0) sending to (0,0,1,1)
-(0,0,1,1) sending to (0,0,0,0)
-Begin: payload_sz=0
-Begin: payload_sz=0
-Begin: payload_sz=0
+Note: Extending array to size 1
+0 (0,0,0,1) (sz=1) sending to (0,0,1,0)
+Note: Extending array to size 1
+0 (0,0,1,1) (sz=1) sending to (0,0,1,0)
+Note: Extending array to size 1
+1 (0,0,0,1) (sz=1) sending to (0,0,1,1)
+Note: Extending array to size 1
+1 (0,0,1,1) (sz=1) sending to (0,0,1,0)
+Note: Extending array to size 1
+2 (0,0,0,1) (sz=1) sending to (0,0,0,0)
+Note: Extending array to size 1
+2 (0,0,1,1) (sz=1) sending to (0,0,0,1)
+Note: Extending array to size 1
+3 (0,0,1,1) (sz=1) sending to (0,0,1,0)
+Note: Extending array to size 1
+3 (0,0,0,1) (sz=1) sending to (0,0,0,0)
+Begin: payload_sz=1
 Recv: current payload_sz=1
-(0,1) receiving (0,0,1,0) from (0,0,1,0)
-Error: (0,1) not expecting a packet from (1,0)
+0 (1,0) receiving (0,0,1,0) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Note: Extending array to size 1
+4 (0,0,1,1) (sz=1) sending to (0,0,0,1)
+Note: Extending array to size 1
+4 (0,0,0,1) (sz=1) sending to (0,0,1,1)
+Begin: payload_sz=1
 Recv: current payload_sz=1
-(1,1) receiving (0,0,1,1) from (0,0,1,1)
-Error: (1,1) not expecting a packet from (1,1)
-Begin: payload_sz=0
+1 (1,0) receiving (0,0,1,0) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Note: Extending array to size 1
+5 (0,0,1,1) (sz=1) sending to (0,0,0,1)
+Note: Extending array to size 1
+5 (0,0,0,1) (sz=1) sending to (0,0,0,0)
+Begin: payload_sz=1
+Begin: payload_sz=1
 Recv: current payload_sz=1
-(0,0) receiving (0,0,0,0) from (0,0,0,0)
-Error: (0,0) not expecting a packet from (0,0)
-1000451.00ns INFO     Test Passed: entry
-1000451.00ns INFO     Passed 1 tests (0 skipped)
-1000451.00ns INFO     ***************************************************************************************
+1 (1,1) receiving (0,0,1,1) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Begin: payload_sz=1
+Begin: payload_sz=1
+Recv: current payload_sz=1
+2 (0,1) receiving (0,0,0,1) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Recv: current payload_sz=1
+0 (1,0) receiving (0,0,1,0) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Empty
+Recv: current payload_sz=1
+2 (0,0) receiving (0,0,0,0) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Note: Extending array to size 1
+6 (0,0,1,1) (sz=1) sending to (0,0,0,0)
+Note: Extending array to size 1
+6 (0,0,0,1) (sz=1) sending to (0,0,1,1)
+Begin: payload_sz=1
+Begin: payload_sz=1
+Recv: current payload_sz=1
+3 (0,0) receiving (0,0,0,0) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Recv: current payload_sz=1
+3 (1,0) receiving (0,0,1,0) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Empty
+Note: Extending array to size 1
+7 (0,0,1,1) (sz=1) sending to (0,0,0,0)
+Note: Extending array to size 1
+7 (0,0,0,1) (sz=1) sending to (0,0,1,0)
+Begin: payload_sz=1
+Begin: payload_sz=1
+Recv: current payload_sz=1
+4 (0,1) receiving (0,0,0,1) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Recv: current payload_sz=1
+4 (1,1) receiving (0,0,1,1) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Begin: payload_sz=1
+Begin: payload_sz=1
+Recv: current payload_sz=1
+5 (0,1) receiving (0,0,0,1) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Empty
+Recv: current payload_sz=1
+5 (0,0) receiving (0,0,0,0) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Empty
+Begin: payload_sz=1
+Recv: current payload_sz=1
+6 (1,1) receiving (0,0,1,1) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Empty
+Begin: payload_sz=1
+Recv: current payload_sz=1
+6 (0,0) receiving (0,0,0,0) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Begin: payload_sz=1
+Begin: payload_sz=1
+Recv: current payload_sz=1
+7 (0,0) receiving (0,0,0,0) from (0,0,1,1)
+TODO: check packet from (0,0,1,1)
+Empty
+Recv: current payload_sz=1
+7 (1,0) receiving (0,0,1,0) from (0,0,0,1)
+TODO: check packet from (0,0,0,1)
+Empty
+1000000.00ns ERROR    Failing test at simulator request before test run completion: Simulator shutdown prematurely
+1000000.00ns ERROR    Test error has lead to simulator shutting us down
+                      cocotb.result.SimFailure: Failing test at simulator request before test run completion: Simulator shutdown prematurely
+1000000.00ns ERROR    Failed 1 out of 1 tests (0 skipped)
+1000000.00ns INFO     ***************************************************************************************
                       ** TEST                           PASS/FAIL  SIM TIME(NS)  REAL TIME(S)  RATIO(NS/S) **
                       ***************************************************************************************
-                      ** fwnoc_tests.fwnoc.smoke.entry    PASS      1000451.00          1.96    510806.30  **
+                      ** fwnoc_tests.fwnoc.smoke.entry    FAIL      1000000.00          2.64    378390.20  **
                       ***************************************************************************************
                       
-1000451.00ns INFO     *************************************************************************************
-                      **                                 ERRORS : 0                                      **
+1000000.00ns INFO     *************************************************************************************
+                      **                                 ERRORS : 1                                      **
                       *************************************************************************************
-                      **                               SIM TIME : 1000451.00 NS                          **
-                      **                              REAL TIME : 2.01 S                                 **
-                      **                        SIM / REAL TIME : 498377.34 NS/S                         **
+                      **                               SIM TIME : 1000000.00 NS                          **
+                      **                              REAL TIME : 2.69 S                                 **
+                      **                        SIM / REAL TIME : 371585.00 NS/S                         **
                       *************************************************************************************
                       
-1000451.00ns INFO     Shutting down...
+1000000.00ns INFO     Shutting down...
+VCD info: dumpfile simx.vcd opened for output.
+gpio_bfm: fwnoc_2x2_tb.u_gpio_params.init
+_send_req: 'h0000000040100001
+_send_req: 'h0000000040500001
+ack
+ack
+_send_req: 'h00000000ffe7a902
+_send_req: 'h000000005d3339db
+ack
+ack
+_send_req: 'h0000000050100011
+_send_req: 'h0000000040500011
+ack
+ack
+_send_req: 'h000000006c17baf4
+_send_req: 'h000000009fd5c209
+ack
+ack
+_send_req: 'h0000000000100021
+_send_req: 'h0000000010500021
+ack
+ack
+_send_req: 'h0000000016d52e81
+_send_req: 'h0000000084e57c8f
+ack
+ack
+_send_req: 'h0000000040500031
+_send_req: 'h0000000000100031
+ack
+_send_req: 'h00000000e7d79c70
+ack
+ack
+_send_req: 'h000000009a8cb728
+_send_req: 'h0000000010500041
+ack
+_send_req: 'h0000000050100041
+ack
+_send_req: 'h00000000d7ee5bac
+ack
+ack
+_send_req: 'h00000000e8207007
+_send_req: 'h0000000010500051
+ack
+_send_req: 'h0000000000100051
+ack
+_send_req: 'h00000000b8a3247c
+ack
+ack
+_send_req: 'h00000000855fd5a0
+_send_req: 'h0000000000500061
+ack
+_send_req: 'h0000000050100061
+ack
+_send_req: 'h00000000a1a77454
+ack
+ack
+_send_req: 'h0000000089757a00
+_send_req: 'h0000000000500071
+ack
+_send_req: 'h0000000040100071
+ack
+_send_req: 'h00000000807a0e05
+ack
+ack
+_send_req: 'h000000005fe35c13
+ack
+1000000: Timeout
 make[1]: Leaving directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir'
+make -C /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir -f /project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/mkdv.mk \
+	MKDV_RUNDIR=/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir \
+	MKDV_CACHEDIR=/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/cache/icarus check-cocotb
 make[1]: Entering directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir'
+if test ! -f results.xml; then \
+	echo "FAIL: no results.xml file" > status.txt; \
+else \
+	failure_wc=`grep 'failure' results.xml | wc -l`; \
+	if test $failure_wc -eq 0; then \
+		echo "PASS: " > status.txt; \
+	else \
+		echo "FAIL: " > status.txt; \
+	fi \
+fi
 make[1]: Leaving directory '/project/fun/featherweight-ip/fwnoc/verilog/dv/sim/fwnoc_2x2/rundir'

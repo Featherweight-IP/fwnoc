@@ -222,6 +222,24 @@ module fwnoc_router #(
 		`RV_CONNECT(i3_, ei2we_),
 		`RV_CONNECT(e_, we_)
 		);
+	
+	fwnoc_router_dbg #(
+			.X_ID(X_ID),
+			.Y_ID(Y_ID)
+		) u_dbg (
+			.clock(clock),
+			.reset(reset),
+			`RV_CONNECT(he_, he_),
+			`RV_CONNECT(hi_, hi_),
+			`RV_CONNECT(ne_, ne_),
+			`RV_CONNECT(ni_, ni_),
+			`RV_CONNECT(se_, se_),
+			`RV_CONNECT(si_, si_),
+			`RV_CONNECT(ee_, ee_),
+			`RV_CONNECT(ei_, ei_),
+			`RV_CONNECT(we_, we_),
+			`RV_CONNECT(wi_, wi_)			
+		);
 
 endmodule
 

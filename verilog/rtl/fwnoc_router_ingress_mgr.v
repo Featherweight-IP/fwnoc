@@ -77,11 +77,11 @@ module fwnoc_router_ingress_mgr #(
 	 */
 	reg[2:0]		dst;
 	
-	assign he_valid = ((dst == 3'd0) & if_valid);
-	assign ne_valid = ((dst == 3'd1) & if_valid);
-	assign se_valid = ((dst == 3'd2) & if_valid);
-	assign ee_valid = ((dst == 3'd3) & if_valid);
-	assign we_valid = ((dst == 3'd4) & if_valid);
+	assign he_valid = ((dst == 3'd0) & if_valid && state == 2);
+	assign ne_valid = ((dst == 3'd1) & if_valid && state == 2);
+	assign se_valid = ((dst == 3'd2) & if_valid && state == 2);
+	assign ee_valid = ((dst == 3'd3) & if_valid && state == 2);
+	assign we_valid = ((dst == 3'd4) & if_valid && state == 2);
 	
 	always @* begin 
 		case (dst) // synopsys parallel_case full_case

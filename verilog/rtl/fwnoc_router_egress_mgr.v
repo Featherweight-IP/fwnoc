@@ -144,13 +144,20 @@ module fwnoc_router_egress_mgr(
 					// Wait for the selected ingress to
 					// have valid data
 					if (i_valid) begin
-						payload_sz <= (e_dat[3:0] + 1);
+						case (e_dat[3:0]) // synopsys parallel_case full_case
+							0: payload_sz <= 5'd0;
+							1: payload_sz <= 5'd1;
+							2: payload_sz <= 5'd2;
+							3: payload_sz <= 5'd4;
+							4: payload_sz <= 5'd8;
+							5: payload_sz <= 5'd16;
+						endcase
 						state <= 1;
 						last_gnt <= prioritized_gnt;
 					end
 				end
 				1: begin
-					if (e_valid && e_ready) begin
+					if (i_valid && e_ready) begin
 						if (payload_sz == 0) begin
 							state <= 0;
 						end else begin
