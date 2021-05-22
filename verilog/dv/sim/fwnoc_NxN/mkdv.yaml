@@ -1,0 +1,50 @@
+
+jobs:
+        - single_inflight_00_01_sz_zero:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_00_01_sz_zero
+
+        - single_inflight_b2b_sz_zero:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_zero
+
+        - single_inflight_b2b_sz_one:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_one
+
+        - single_inflight_b2b_sz_two:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_two
+
+        - single_inflight_b2b_sz_four:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_four
+
+        - single_inflight_p2p_sz_zero:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_p2p_sz_zero
+
+        - single_inflight_p2p_sz_one:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_one
+
+        - single_inflight_p2p_sz_two:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_two
+
+        - single_inflight_p2p_sz_four:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.single_inflight_b2b_sz_four
+
+        - two_inflight_mirror_target_sz_zero:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.two_inflight_mirror_target_sz_zero
+
+        - two_inflight_mirror_target_sz_one:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.two_inflight_mirror_target_sz_one
+
+        - two_inflight_mirror_target_sz_two:
+          variables:
+            - MKDV_COCOTB_MODULE: fwnoc_tests.two_inflight_mirror_target_sz_two
+

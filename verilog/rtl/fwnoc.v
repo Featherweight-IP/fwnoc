@@ -4,7 +4,8 @@
  ****************************************************************************/
 `include "rv_macros.svh"
 
-`define wire_idx(x,y) (((y)*X_SIZE)+(x))
+//`define wire_idx(x,y) (((y)*X_SIZE)+(x))
+`define wire_idx(x,y) (((x)*Y_SIZE)+(y))
   
 /**
  * Module: fwnoc
@@ -24,8 +25,8 @@ module fwnoc #(
 	
 	// Wires are arranged as follows (assume 2x2)
 	// [0] - [x=0,y=0]
-	// [1] - [x=1,y=0]
-	// [2] - [x=0,y=1]
+	// [1] - [x=0,y=1]
+	// [2] - [x=1,y=0]
 	// [3] - [x=1,y=1]
 	
 	`RV_WIRES_ARR(router_ne_, 32, (X_SIZE*Y_SIZE));
@@ -40,8 +41,9 @@ module fwnoc #(
 	// Instance routers and connect to the grid
 	generate
 		genvar xi, yi;
-		for (yi=0; yi<Y_SIZE; yi=yi+1) begin : router_xi
-			for (xi=0; xi<X_SIZE; xi=xi+1) begin : router_yi
+		// Iterate over Y inside to ensure y dimension is second
+		for (xi=0; xi<X_SIZE; xi=xi+1) begin : router_xi
+			for (yi=0; yi<Y_SIZE; yi=yi+1) begin : router_yi
 				fwnoc_router #(
 					.FIFO_DEPTH  (FIFO_DEPTH ), 
 					.X_ID        (xi         ), 
@@ -68,8 +70,8 @@ module fwnoc #(
 	generate
 		// Complete East/West connections
 		genvar ew_xi, ew_yi;
-		for (ew_yi=0; ew_yi<Y_SIZE; ew_yi=ew_yi+1) begin : ew_connections_yi
-			for (ew_xi=0; ew_xi<X_SIZE-1; ew_xi=ew_xi+1) begin : ew_connections_xi
+		for (ew_xi=0; ew_xi<X_SIZE-1; ew_xi=ew_xi+1) begin : ew_connections_xi
+			for (ew_yi=0; ew_yi<Y_SIZE; ew_yi=ew_yi+1) begin : ew_connections_yi
 				// East egress port
 				//
 				// The east-bound egress port on this router connects 

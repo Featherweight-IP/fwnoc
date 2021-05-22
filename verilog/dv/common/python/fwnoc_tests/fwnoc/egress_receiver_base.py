@@ -4,6 +4,7 @@ Created on May 7, 2021
 @author: mballance
 '''
 
+import cocotb
 import pybfms
 
 class EgressReceiverBase(object):
@@ -40,6 +41,8 @@ class EgressReceiverBase(object):
 
         if len(queue) == 0:            
             print("Error: (" + str(self.x) + "," + str(self.y) + ") not expecting a packet from (" +
+                  str(pkt.src_tile_x) + "," + str(pkt.src_tile_y) + ")")
+            raise cocotb.result.SimFailure("Error: (" + str(self.x) + "," + str(self.y) + ") not expecting a packet from (" +
                   str(pkt.src_tile_x) + "," + str(pkt.src_tile_y) + ")")
         else:
             print("TODO: check packet from " + pkt.src_s())

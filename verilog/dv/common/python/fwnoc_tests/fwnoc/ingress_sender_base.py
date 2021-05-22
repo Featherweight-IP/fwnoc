@@ -3,6 +3,7 @@ Created on May 7, 2021
 
 @author: mballance
 '''
+import pybfms
 
 class IngressSenderBase(object):
     """
@@ -22,8 +23,10 @@ class IngressSenderBase(object):
         self.ingress = ingress
         self.receivers = receivers
         self.id = 0
+        self.lock = pybfms.lock()
         
     async def send(self, pkt):
+        await self.lock.acquire()
         pkt.src_chip_x = 0
         pkt.src_chip_y = 0
         pkt.src_tile_x = self.src_x
@@ -32,3 +35,4 @@ class IngressSenderBase(object):
         recv = self.receivers[(pkt.dst_tile_x,pkt.dst_tile_y)]
         recv.add_exp(pkt)
         await self.ingress.send(pkt)
+        self.lock.release()
